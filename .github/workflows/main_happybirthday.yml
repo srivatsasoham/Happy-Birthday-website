@@ -17,4 +17,4 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'happybirthday'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_951D }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
