@@ -7,22 +7,26 @@ on:
   workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
-
-env:
-  AZURE_WEBAPP_NAME: happybirthday
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout GitHub repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy to Azure Web App
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DF0E8150F4848E18F78B90E001B69EA }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D0F077A0FCA94888AF60B15280E590BB }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_6824BF63DCBD416FB8F8C0A848F17D1B }}
+
+      - name: Deploy website to Azure
         uses: azure/webapps-deploy@v3
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-name: happybirthday
           package: .
